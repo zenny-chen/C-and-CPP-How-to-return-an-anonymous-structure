@@ -46,4 +46,31 @@ int main(void)
 
 <br />
 
-下面谈谈C语言中如何实现。
+下面谈谈C语言中如何实现。由于当前纯正的C18标准是不支持类型推导以及获取对象类型的语法的，因此我们直接用C11/C18标准是行不通的。但是GNU语法扩展很早就引入了 `typeof` 关键字，`typeof` 的操作数不仅可以为对象表达式，而且还可以是类型，所以灵活度上比C++的 `decltype` 更高。从GCC 4.9以及Clang 3.8起，这两大开源主流编译器就引入了 `__auto_type` 关键字，其作用就跟C++11标准中的 `auto` 一样，作为类型自动推导的声明符。这么一来就能在使用返回类型为匿名结构体的函数调用上更为简洁了。
+
+下面看一下基于gnu11标准的C代码：
+
+```c
+#include <stdio.h>
+
+#ifndef let
+#define let     __auto_type
+#endif // !let
+
+
+static struct { int a; int b; } FooStruct(int a, int b)
+{
+    typeof(FooStruct(0, 0)) s = { a, b };
+    return s;
+}
+
+int main(void)
+{
+    let const s = FooStruct(10, 20);
+    printf("a = %d, b = %d\n", s.a, s.b);
+}
+```
+
+以上代码需要GCC 4.9或更高，Clang 3.8或更高，VS 2017或更高版本并使用Clang编译器模板进行编译运行。
+
+
