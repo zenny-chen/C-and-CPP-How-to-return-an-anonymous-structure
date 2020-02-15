@@ -73,7 +73,7 @@ int main(void)
     let const s = FooStruct(10, 20);
     printf("a = %d, b = %d\n", s.a, s.b);
     
-    // 这里使用了匿名结构体以及指定成员的初始化器这两种语法特性
+    // 这里使用了匿名结构体字面量和指定成员的初始化器这两种语法特性
     let const s2 = (typeof(s)){ .a = 1, .b = 2 };
     printf("The value is: %d\n", s2.a + s2.b);
 }
