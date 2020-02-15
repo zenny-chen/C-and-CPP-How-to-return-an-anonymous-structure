@@ -42,7 +42,7 @@ int main(void)
 }
 ```
 
-对于上述代码，各位可以在Visual Studio 2017或更高版本，GCC 4.9或更高版本，Clang 3.8或更高版本中编译运行。
+对于上述代码，各位可以在Visual Studio 2017或更高版本。当前Apple LLVM还没支持，因为在当前稳定的C++版本中，C++标准尚未将此特性加入，而在2017年02月03日，有人已经提出了这个决议，详细请见此决议文档：《[Implicit Return Type and Allowing Anonymous Types as Return Values](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0536r0.html)》。这么一来，此优雅简洁的语法将会在C++20标准中实现。
 
 <br />
 
