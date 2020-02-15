@@ -39,6 +39,10 @@ int main(void)
 
     auto s2 = FooStruct(10, 20);
     cout << "a = " << s2.a << ", b = " << s2.b << endl;
+
+    // 这里直接使用了结构体默认支持的std::initializer_list语法特性
+    auto s3 = decltype(s2){ 5, 6 };
+    cout << "The value is: " << s3.a + s3.b << endl;
 }
 ```
 
@@ -68,6 +72,10 @@ int main(void)
 {
     let const s = FooStruct(10, 20);
     printf("a = %d, b = %d\n", s.a, s.b);
+    
+    // 这里使用了匿名结构体以及指定成员的初始化器这两种语法特性
+    let const s2 = (typeof(s)){ .a = 1, .b = 2 };
+    printf("The value is: %d\n", s2.a + s2.b);
 }
 ```
 
