@@ -46,7 +46,30 @@ int main(void)
 }
 ```
 
-对于上述代码，各位可以在Visual Studio 2017或更高版本。当前Apple LLVM还没支持，因为在当前稳定的C++版本中，C++标准尚未将此特性加入，而在2017年02月03日，有人已经提出了这个决议，详细请见此决议文档：《[Implicit Return Type and Allowing Anonymous Types as Return Values](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0536r0.html)》。这么一来，此优雅简洁的语法将会在C++20标准中实现。
+对于上述代码，各位可以在Visual Studio 2017或更高版本。当前Clang、GCC还没支持上述这种表达形式，因为在当前稳定的C++版本中，C++标准尚未将此特性加入，而在2017年02月03日，有人已经提出了这个决议，详细请见此决议文档：《[Implicit Return Type and Allowing Anonymous Types as Return Values](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0536r0.html)》，但估计不太会实现了。因为在C++14标准中引入了通过 `auto` 关键字声明函数，然后缺省为它指定类型，该函数将会通过返回值自动推导出类型。不过这个机制的一大缺陷就是，在调用函数时必须要先知道这个函数的定义，否则编译器是无法知道该函数的确切返回类型的，因此这个机制一般用于当前源文件的部分功能实现，要作为外部共享函数的话，要么通过静态函数方式，要么就用内联形式来定义了。
+
+下面给出例子：
+
+```cpp
+#include <iostream>
+using namespace std;
+
+static auto Foo(int a, int b)
+{
+    struct
+    {
+        int x, y;
+    } ret{a, b};
+    
+    return ret;
+}
+
+int main(void)
+{
+    auto const s = Foo(1, 2);
+    cout << "The value is: " << s.x + s.y << endl;
+}
+```
 
 <br />
 
